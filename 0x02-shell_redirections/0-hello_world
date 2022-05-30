@@ -1,3 +1,2 @@
 #!/bin/bash
-var="Hello World"
-printf "%s\n" "$var"
+printf "Hello World\n"
