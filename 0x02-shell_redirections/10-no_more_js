@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo find . -type f -name "/*.js" -delete
+sudo find . -type f -type d -name "*.js" -delete
