@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
 # connecting to the container and fixing
-apt-get update
-apt-get install apache2
 service apache2 start
