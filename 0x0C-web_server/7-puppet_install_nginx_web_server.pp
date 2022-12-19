@@ -1,34 +1,20 @@
-# Install Nginx package
+# Install Nginx web server (w/ Puppet)
 package { 'nginx':
-  ensure => 'installed',
+  ensure => installed,
 }
 
-# Ensure Nginx service is running and enabled
-service { 'nginx':
-  ensure => 'running',
-  enable => true,
+file_line { 'aaaaa':
+  ensure => 'present',
+  path   => '/etc/nginx/sites-available/default',
+  after  => 'listen 80 default_server;',
+  line   => 'rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;',
 }
 
-# Configure Nginx to listen on port 80
-nginx::resource::server { 'default':
-  listen => '80',
-}
-
-# Set the root directory for the default server
-nginx::resource::location { '/':
-  server => 'default',
-  root => '/var/www/html',
-}
-
-# Create a simple HTML page at the root directory
 file { '/var/www/html/index.html':
-  ensure  => 'file',
   content => 'Hello World!',
 }
 
-# Configure a 301 redirect for the /redirect_me path
-nginx::resource::location { '/redirect_me':
-  server => 'default',
-  return => '301 $scheme://$host$request_uri',
+service { 'nginx':
+  ensure  => running,
+  require => Package['nginx'],
 }
-
