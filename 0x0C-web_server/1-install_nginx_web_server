@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# installs nginx web server
+
+# Update the package manager's package list
+sudo apt-get update
+
+# Install nginx
+sudo apt-get install -y nginx
+
+# Create the index.html file with the desired content
+sudo bash -c 'echo "Hello World!" > /var/www/html/index.html'
+
+# Modify the root directive in the default nginx configuration file
+sudo sed -i 's#root /var/www/html;#root /var/www/html;#' /etc/nginx/sites-available/default
+
+# Restart nginx to apply the changes
+sudo /etc/init.d/nginx restart
