@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Get the main Gunicorn process ID
+main_pid=$(pgrep -f gunicorn | head -1)
+
+# Send SIGTTIN signal to gracefully restart workers
+kill -s SIGTTIN $main_pid
+
+# Give time for workers to finish requests
+sleep 10 
+
+# Send SIGQUIT signal to quit old master
+kill -s SIGQUIT $main_pid
+
+# Restart the Gunicorn service
+sudo systemctl restart gunicorn
