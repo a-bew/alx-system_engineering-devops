@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn service for AirBnB app
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/AirBnB_clone_v4
+Environment="PATH=/AirBnB_clone_v4/web_dynamic/2-hbnb.py"
+ExecStart=/usr/bin/tmux new-session -d '/usr/local/bin/gunicorn --workers 3 --bind 0.0.0.0:5003 web_dynamic.2-hbnb:app'
+
+[Install]
+WantedBy=multi-user.target
